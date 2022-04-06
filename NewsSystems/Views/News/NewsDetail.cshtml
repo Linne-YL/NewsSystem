@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "NewsDetail";
+}
+
+<h2>@Model.Title</h2>
+
+<table class="layui-table">
+    <colgroup>
+        <col width="50">
+        <col width="25">
+        <col>
+    </colgroup>
+    
+    <tbody>
+        <tr>
+            <td>作者</td>
+            <td>@Model.MemberName</td>
+
+        </tr>
+        <tr>
+            <td>发布时间</td>
+            <td>@Model.InsertDate</td>
+
+        </tr>
+        <tr>
+            <td>标题</td>
+            <td>@Model.Title</td>
+
+        </tr>
+        <tr>
+            <td>内容</td>
+            <td>@Model.Text</td>
+
+        </tr>
+    </tbody>
+</table>

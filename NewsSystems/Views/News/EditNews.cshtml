@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "EditNews";
+}
+<div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">主菜单</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:location.href='/News/Index';">首页</a></dd>
+                        <dd><a href="javascript:location.href='/News/UserManagement';">用户管理</a></dd>
+                        <dd><a href="javascript:location.href='/News/AddNews';">发布新闻</a></dd>
+                        <dd><a href="javascript:location.href='/News/ExitSystem';">退出系统</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            编辑新闻
+           
+            <br><br>
+                <div class="layui-form">
+                    <input type="hidden" id="id" value="@Model.Id" />
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">作者</label>
+                        <div class="layui-input-block">
+                            <input readonly type="text" name="author" id="author" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input" value="@Model.MemberName">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">新闻标题</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="title" id="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" value="@Model.Title">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">文本域</label>
+                        <div class="layui-input-block" contenteditable="true">
+                            <textarea name="desc" id="desc" placeholder="请输入内容" class="layui-textarea" style="overflow-y:visible"  >@Model.Text</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo" id="btn">立即提交</button>
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        统计
+    </div>
+</div>
+
+
+<script>
+    $(function () {
+
+        $("#btn").click(function () {
+
+            $.ajax({
+                url: '/News/EditNewsAction',
+                type: 'post',
+                data: {
+                    'id': $('#id').val(),
+                    'title': $('#title').val(),
+                    'desc': $('#desc').val(),
+                },
+                success: function (msg) {
+                    if (msg == "修改成功") {
+                        location.href = '/News/Index';
+                    }
+                    else {
+                        layer.open({
+                            title: '警告'
+                            , content: '标题或内容不能为空'
+                        });
+                    }
+                },
+            });
+        });
+    });
+</script>
+

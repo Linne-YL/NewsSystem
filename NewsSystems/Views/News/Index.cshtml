@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo layui-hide-xs layui-bg-black">新闻管理系统</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                当前用户：@Session["username"]
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">主菜单</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:location.href='/News/Index';">首页</a></dd>
+                        <dd><a href="javascript:location.href='/News/UserManagement';">用户管理</a></dd>
+                        <dd><a href="javascript:location.href='/News/AddNews';">发布新闻</a></dd>
+                        <dd><a href="javascript:location.href='/News/ExitSystem';">退出系统</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            
+           
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+           新闻列表
+            <br><br>
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>记者</th>
+                            <th>发布时间</th>
+                            <th>标题</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (NewsSystem.Models.News news in Model)
+                        {
+                        <tr>
+                            <td>@news.MemberName</td>
+                            <td>@news.InsertDate</td>
+                            <td><a href='/News/NewsDetail?id=@news.Id' target="_blank">@news.Title</a></td>
+                            <td>
+                                @Html.ActionLink("删除", "DelectNews", new {Id = news.Id}, new { onclick = "return confirm ('是否确认删除')" })
+                                @Html.ActionLink("编辑", "EditNews", new { Id = news.Id } )
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        统计
+    </div>
+</div>
